@@ -3,8 +3,123 @@ import React, { useState } from 'react';
 import { Progress } from '@/app/components/ui/Progress';
 import { Breadcrumb } from '@/app/components/ui/Breadcrumb';
 import { Modal } from './ui/Modal';
-import { Home, AlertTriangle, Info } from 'lucide-react';
+import Button from '@/app/components/ui/button';
+import Alert from '@/app/components/ui/alert';
+import { Home, AlertTriangle, Info, Smile, Meh, Frown, Bell, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import ModalContent from './examples/ModalContent';
+
+const ButtonShowcase: React.FC = () => {
+  return (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-md font-medium mb-2">Variants</h4>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="link">Link</Button>
+        </div>
+      </div>
+      <div>
+        <h4 className="text-md font-medium mb-2">Sizes</h4>
+        <div className="flex flex-wrap gap-2 items-center">
+          <Button variant="primary" size="sm">Small</Button>
+          <Button variant="primary" size="md">Medium</Button>
+          <Button variant="primary" size="lg">Large</Button>
+        </div>
+      </div>
+      <div>
+        <h4 className="text-md font-medium mb-2">With Icons</h4>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="primary" icon={<Smile />} iconPosition="left">
+            Icon Left
+          </Button>
+          <Button variant="secondary" icon={<Meh />} iconPosition="right">
+            Icon Right
+          </Button>
+        </div>
+      </div>
+      <div>
+        <h4 className="text-md font-medium mb-2">States</h4>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="primary" isLoading>
+            Loading
+          </Button>
+          <Button variant="primary" disabled>
+            Disabled
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AlertShowcase: React.FC = () => {
+  const [isSuccessAlertVisible, setIsSuccessAlertVisible] = useState(true);
+  const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(true);
+  const [isWarningAlertVisible, setIsWarningAlertVisible] = useState(true);
+  const [isInfoAlertVisible, setIsInfoAlertVisible] = useState(true);
+  const [isCustomAlertVisible, setIsCustomAlertVisible] = useState(true);
+
+  const resetAlerts = () => {
+    setIsSuccessAlertVisible(true);
+    setIsErrorAlertVisible(true);
+    setIsWarningAlertVisible(true);
+    setIsInfoAlertVisible(true);
+    setIsCustomAlertVisible(true);
+  };
+
+  return (
+    <div className="space-y-4">
+      {isSuccessAlertVisible && (
+        <Alert
+          variant="success"
+          title="Success!"
+          message="Your profile has been updated successfully."
+          onClose={() => setIsSuccessAlertVisible(false)}
+        />
+      )}
+      {isErrorAlertVisible && (
+        <Alert
+          variant="error"
+          title="Error!"
+          message="Failed to upload file. Please try again."
+          onClose={() => setIsErrorAlertVisible(false)}
+        />
+      )}
+      {isWarningAlertVisible && (
+        <Alert
+          variant="warning"
+          title="Warning"
+          message="Your session is about to expire in 5 minutes."
+          onClose={() => setIsWarningAlertVisible(false)}
+        />
+      )}
+      {isInfoAlertVisible && (
+        <Alert
+          variant="info"
+          title="Information"
+          message="A new software update is available for download."
+          onClose={() => setIsInfoAlertVisible(false)}
+        />
+      )}
+      {isCustomAlertVisible && (
+        <Alert
+          variant="info" // Base variant for styling, can be overridden by className
+          title="Custom Alert"
+          message="This alert uses a custom icon and styling."
+          icon={<Bell className="h-5 w-5 text-purple-600" />}
+          className="bg-purple-100 border-purple-400 text-purple-700"
+          onClose={() => setIsCustomAlertVisible(false)}
+        />
+      )}
+      {!isSuccessAlertVisible && !isErrorAlertVisible && !isWarningAlertVisible && !isInfoAlertVisible && !isCustomAlertVisible && (
+        <Button onClick={resetAlerts}>Reset Alerts</Button>
+      )}
+    </div>
+  );
+};
 
 export const UIComponentDemo: React.FC = () => {
   const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
@@ -225,6 +340,18 @@ export const UIComponentDemo: React.FC = () => {
 
         {/* error */}
 
+      </div>
+
+      {/* Button Demo */}
+      <div>
+        <h3 className="text-lg font-semibold mb-2">Buttons</h3>
+        <ButtonShowcase />
+      </div>
+
+      {/* Alert Demo */}
+      <div>
+        <h3 className="text-lg font-semibold mb-2">Alerts</h3>
+        <AlertShowcase />
       </div>
     </div>
   );
